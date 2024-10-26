@@ -24,7 +24,7 @@ Let's keep it simple:
 4. Help others
 5. Accept feedback gracefully
 
-For more details, see our [Code of Conduct](CODE_OF_CONDUCT.md).
+For more details, see our ~~[Code of Conduct](CODE_OF_CONDUCT.md)~~ (Doesn't Exist Yet... Todo).
 
 ## The Development Process
 
@@ -148,24 +148,28 @@ const test = () => {
 ### Test Structure
 
 ```typescript
-// test/types/user.test.ts
-namespace UserTests {
-    type ValidUser = {
-        id: string;
-        name: string;
-    };
+// tests/get.test.ts
+namespace GetTests {
+    namespace TypeString {
+        type TypeString = Get.TypeString<{ a: 1; b: "2" }>;
+        type Expected = "Record<string, string>" | "Record<string, number>";
+        type TestTypeString = Assert<
+            //    ^?
+            Is<TypeString, Expected>,
+            "Should provide a string representation of the type"
+        >;
 
-    // Test type validation
-    type TestValidUser = Assert<
-        Is<ValidUser, UserSchema>,
-        "User schema validation failed"
-    >;
+        const GenericFunction = <T, U>(
+            value: T,
+            arg: {
+                type: Get.TypeString<T>;
+            }
+        ) => {};
 
-    // Test error messages
-    type TestUserError = Assert<
-        Is.Not<InvalidUser, UserSchema>,
-        "Should reject invalid user"
-    >;
+        //@ts-expect-error: should match the type name
+        const invalid = GenericFunction(3, { type: 3 });
+        const valid = GenericFunction(3, { type: "number" });
+    }
 }
 ```
 
@@ -201,8 +205,8 @@ type ValidateUser<T> = Assert<
 
 1. **Before Submitting**
 
-    - Run all tests (`pnpm test`)
-    - Run type checks (`pnpm type-check`)
+    - ~~Run all tests (`pnpm test`)~~ still working on this
+    - ~~Run type checks (`pnpm type-check`)~~ still working on this
     - Update documentation
     - Add tests for new features
     - Update README if needed
@@ -238,8 +242,8 @@ type ValidateUser<T> = Assert<
     ```
 
 3. **Review Process**
-    - Two approvals required
-    - All checks must pass
+    - One approvals required (Until contributions are in full swing. Then at least 2)
+    - All checks must pass (When there are tests ofc.)
     - No runtime type checking smuggled in
 
 ## Release Process
@@ -247,7 +251,7 @@ type ValidateUser<T> = Assert<
 1. **Version Bump**
 
     ```bash
-    pnpm version <major|minor|patch>
+    npm|yarn|deno version <major|minor|patch>
     ```
 
 2. **Release Notes**
@@ -259,7 +263,7 @@ type ValidateUser<T> = Assert<
 
 3. **Publishing**
     ```bash
-    pnpm publish
+    npx jsr publish
     ```
 
 ## Recognition

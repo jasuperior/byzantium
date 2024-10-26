@@ -308,13 +308,6 @@ Recommended ESLint configuration to maximize Byzantium's benefits:
 
 We welcome contributions! Please check our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-### Development Setup
-
-1. Clone the repository
-2. Install dependencies: `pnpm install`
-3. Run tests: `pnpm test`
-4. Build: `pnpm build`
-
 ## License
 
 MIT - Free as in "free from runtime type checks"
